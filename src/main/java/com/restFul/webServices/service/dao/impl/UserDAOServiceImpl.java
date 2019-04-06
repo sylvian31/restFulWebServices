@@ -18,39 +18,34 @@ import com.restFul.webServices.service.dao.UserDAOService;
 public class UserDAOServiceImpl implements UserDAOService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOServiceImpl.class);
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
-	public List<User> findAll(){
-		List<User> userList = new ArrayList<>();
-		try {
-			userList = userRepository.findAll();
-			logger.debug("users found by findAll");
-		}catch (Exception e) {
-			logger.error("Impossible to get the users : ", e);
-		}
-		return userList;
+	public List<User> findAll() {
+		List<User> lUserList = new ArrayList<>();
+		lUserList = userRepository.findAll();
+		logger.debug("users found by findAll");
+		return lUserList;
 	}
-	
+
 	@Override
-	public User findById(Integer pId) {
-		User lUser = null;
-		try {
-			lUser = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException(pId));
-			logger.debug("user found : " + lUser.getId());
-		} catch (UserNotFoundException e) {
-			logger.error("User not found : id = " + pId);
-		}catch (Exception e) {
-			logger.error("Impossible to get the user : ", e);
-		}
-		return lUser;
+	public User findById(Integer id) {
+		User user = null;
+		user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		logger.debug("user found : " + user.getId());
+		return user;
 	}
-	
+
 	@Override
 	public User save(User user) throws URISyntaxException {
 		return userRepository.save(user);
+	}
+	
+	@Override
+	public void deleteById(Integer id) {
+		userRepository.deleteById(id);
 	}
 
 }

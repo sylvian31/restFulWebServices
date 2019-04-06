@@ -13,4 +13,6 @@ public interface UserDAOService {
 
 	public User save(User user) throws URISyntaxException;
 
+	public void deleteById(Integer pId);
+
 }
