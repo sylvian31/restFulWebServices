@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class User {
 
@@ -15,6 +19,7 @@ public class User {
 
 	private String name;
 
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date birthDay;
 
 	public User() {

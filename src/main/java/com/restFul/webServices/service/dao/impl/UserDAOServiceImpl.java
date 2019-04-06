@@ -1,5 +1,6 @@
 package com.restFul.webServices.service.dao.impl;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class UserDAOServiceImpl implements UserDAOService {
 		List<User> userList = new ArrayList<>();
 		try {
 			userList = userRepository.findAll();
+			logger.debug("users found by findAll");
 		}catch (Exception e) {
-			logger.error("Impossible de recuperer les users : ", e);
+			logger.error("Impossible to get the users : ", e);
 		}
 		return userList;
 	}
@@ -37,12 +39,18 @@ public class UserDAOServiceImpl implements UserDAOService {
 		User lUser = null;
 		try {
 			lUser = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException(pId));
+			logger.debug("user found : " + lUser.getId());
 		} catch (UserNotFoundException e) {
-			logger.error("UserNotFoundException : ", e);
+			logger.error("User not found : id = " + pId);
 		}catch (Exception e) {
-			logger.error("Impossible de recuperer le user : ", e);
+			logger.error("Impossible to get the user : ", e);
 		}
 		return lUser;
+	}
+	
+	@Override
+	public User save(User user) throws URISyntaxException {
+		return userRepository.save(user);
 	}
 
 }
