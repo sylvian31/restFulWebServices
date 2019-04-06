@@ -9,6 +9,10 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +35,17 @@ public class UserController {
 	private UserDAOService userDAOService;
 
 	@GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<User> getUsers() {
+	public List<User> getAllUsers() {
 		return userDAOService.findAll();
 	}
 
 	@GetMapping(path = "user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public User getUserById(@PathVariable Integer id) {
-		return userDAOService.findById(id);
+	public Resource<User> getUserById(@PathVariable Integer id) {
+		User user = userDAOService.findById(id);
+		Resource<User> resource = new Resource<User>(user);
+		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
+		resource.add(linkTo.withRel("all-users"));
+		return resource;
 	}
 
 	@PostMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
