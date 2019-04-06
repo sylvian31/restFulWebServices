@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,8 +19,10 @@ public class User {
 	@GeneratedValue
 	private Integer id;
 
+	@Size(min=2)
 	private String name;
 
+	@Past
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date birthDay;
 

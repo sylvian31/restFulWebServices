@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class UserController {
 	}
 
 	@PostMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity createUser(@RequestBody User user) throws URISyntaxException {
+	public ResponseEntity createUser(@Valid @RequestBody User user) throws URISyntaxException {
 		User savedUser = userDAOService.save(user);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
