@@ -32,9 +32,7 @@ public class UserDAOServiceImpl implements UserDAOService {
 
 	@Override
 	public User findById(Integer id) {
-		User user = null;
-		user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-		logger.debug("user found : " + user.getId());
+		User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException(id));
 		return user;
 	}
 

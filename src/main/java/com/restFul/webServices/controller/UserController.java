@@ -1,5 +1,8 @@
 package com.restFul.webServices.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -11,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +49,7 @@ public class UserController {
 	}
 
 	@PostMapping(path = "user")
-	public ResponseEntity createUser(@Valid @RequestBody User user) throws URISyntaxException {
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) throws URISyntaxException {
 		User savedUser = userDAOService.save(user);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
@@ -57,7 +57,7 @@ public class UserController {
 
 		return ResponseEntity.created(location).build();
 	}
-	
+
 	@DeleteMapping(path = "user/{id}")
 	public void deleteUserById(@PathVariable Integer id) {
 		userDAOService.deleteById(id);
