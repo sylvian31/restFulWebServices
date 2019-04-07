@@ -34,12 +34,12 @@ public class UserController {
 	@Autowired
 	private UserDAOService userDAOService;
 
-	@GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/users")
 	public List<User> getAllUsers() {
 		return userDAOService.findAll();
 	}
 
-	@GetMapping(path = "user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "user/{id}")
 	public Resource<User> getUserById(@PathVariable Integer id) {
 		User user = userDAOService.findById(id);
 		Resource<User> resource = new Resource<User>(user);
@@ -48,7 +48,7 @@ public class UserController {
 		return resource;
 	}
 
-	@PostMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "user")
 	public ResponseEntity createUser(@Valid @RequestBody User user) throws URISyntaxException {
 		User savedUser = userDAOService.save(user);
 
@@ -58,7 +58,7 @@ public class UserController {
 		return ResponseEntity.created(location).build();
 	}
 	
-	@DeleteMapping(path = "user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "user/{id}")
 	public void deleteUserById(@PathVariable Integer id) {
 		userDAOService.deleteById(id);
 	}

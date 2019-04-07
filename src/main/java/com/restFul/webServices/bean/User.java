@@ -12,11 +12,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
+@ApiModel(description="All details about the user. ")
 public class User {
 
 	@Id
 	@GeneratedValue
+	@ApiModelProperty(notes="Name should have atleast 2 characters")
 	private Integer id;
 
 	@Size(min=2)
@@ -24,6 +29,7 @@ public class User {
 
 	@Past
 	@JsonFormat(pattern="dd/MM/yyyy")
+	@ApiModelProperty(notes="Birth date should be in the past")
 	private Date birthDay;
 
 	public User() {
