@@ -11,9 +11,10 @@ public interface UserDAOService {
 	public List<User> findAll();
 
 	public User findById(Integer pId);
-
+	
 	public User save(User user) throws URISyntaxException;
 
 	public void deleteById(Integer pId);
+
 
 }

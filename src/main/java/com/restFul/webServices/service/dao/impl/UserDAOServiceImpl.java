@@ -29,7 +29,7 @@ public class UserDAOServiceImpl implements UserDAOService {
 		logger.debug("users found by findAll");
 		return lUserList;
 	}
-
+	
 	@Override
 	public User findById(Integer id) {
 		User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException(id));
