@@ -28,7 +28,7 @@ import com.restFul.webServices.bean.Post;
 import com.restFul.webServices.bean.User;
 import com.restFul.webServices.exception.UserNotFoundException;
 import com.restFul.webServices.repository.PostRepository;
-import com.restFul.webServices.service.dao.UserDAOService;
+import com.restFul.webServices.service.UserDAOService;
 
 @RestController
 @RequestMapping(path = "/users")

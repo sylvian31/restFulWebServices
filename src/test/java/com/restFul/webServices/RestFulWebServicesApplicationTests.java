@@ -1,4 +1,4 @@
-package com.restFul.webServices.restFulwebservices;
+package com.restFul.webServices;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

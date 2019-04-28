@@ -1,4 +1,4 @@
-package com.restFul.webServices.service.dao.impl;
+package com.restFul.webServices.service.impl;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import com.restFul.webServices.bean.User;
 import com.restFul.webServices.exception.UserNotFoundException;
 import com.restFul.webServices.repository.UserRepository;
-import com.restFul.webServices.service.dao.UserDAOService;
+import com.restFul.webServices.service.UserDAOService;
 
 @Service
-public class UserDAOServiceImpl implements UserDAOService {
+public class UserServiceImpl implements UserDAOService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserDAOServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserRepository userRepository;

@@ -1,4 +1,4 @@
-package com.restFul.webServices.service.dao;
+package com.restFul.webServices.service;
 
 import java.net.URISyntaxException;
 import java.util.List;
