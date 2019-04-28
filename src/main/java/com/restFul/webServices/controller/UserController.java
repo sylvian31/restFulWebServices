@@ -28,7 +28,7 @@ import com.restFul.webServices.bean.Post;
 import com.restFul.webServices.bean.User;
 import com.restFul.webServices.exception.UserNotFoundException;
 import com.restFul.webServices.repository.PostRepository;
-import com.restFul.webServices.service.UserDAOService;
+import com.restFul.webServices.service.UserService;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -37,7 +37,7 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	private UserDAOService userDAOService;
+	private UserService userDAOService;
 	
 	@Autowired
 	private PostRepository postRepository;

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.restFul.webServices.bean.User;
 
-public interface UserDAOService {
+public interface UserService {
 
 	public List<User> findAll();
 

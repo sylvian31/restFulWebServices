@@ -1,6 +1,6 @@
 package com.restFul.webServices.bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -33,16 +31,18 @@ public class User {
 	@Past
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@ApiModelProperty(notes = "Birth date should be in the past")
-	private Date birthDay;
+	private LocalDate birthDay;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Post> posts;
+	
+	private Integer age;
 
 	public User() {
 
 	}
 
-	public User(String name, Date birthDay) {
+	public User(String name, LocalDate birthDay) {
 		super();
 		this.name = name;
 		this.birthDay = birthDay;
@@ -64,11 +64,11 @@ public class User {
 		this.name = name;
 	}
 
-	public Date getBirthDay() {
+	public LocalDate getBirthDay() {
 		return birthDay;
 	}
 
-	public void setBirthDay(Date birthDay) {
+	public void setBirthDay(LocalDate birthDay) {
 		this.birthDay = birthDay;
 	}
 
@@ -79,5 +79,15 @@ public class User {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	
+	
 
 }
