@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
 		lUserList = userRepository.findAll();
 		lUserList.forEach(user -> user.setAge(calculateAge(user.getBirthDay(), LocalDate.now())));
 		logger.debug("users found by findAll");
+		
+		if(lUserList.isEmpty()) {
+			throw new UserNotFoundException();
+		}
+		
 		return lUserList;
 	}
 
@@ -37,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	public User findById(Integer id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 		user.setAge(calculateAge(user.getBirthDay(), LocalDate.now()));
-		logger.debug("users found by find by id", user);
+		logger.debug("users found find by id", user);
 		return user;
 	}
 

@@ -37,19 +37,19 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	private UserService userDAOService;
+	private UserService userService;
 	
 	@Autowired
 	private PostRepository postRepository;
 
 	@GetMapping
 	public List<User> getAllUsers() {
-		return userDAOService.findAll();
+		return userService.findAll();
 	}
 
 	@GetMapping(path = "/{id}")
 	public Resource<User> getUserById(@PathVariable Integer id) {
-		User user = userDAOService.findById(id);
+		User user = userService.findById(id);
 		Resource<User> resource = new Resource<User>(user);
 		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
 		resource.add(linkTo.withRel("all-users"));
@@ -58,7 +58,7 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) throws URISyntaxException {
-		User savedUser = userDAOService.save(user);
+		User savedUser = userService.save(user);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId())
 				.toUri();
@@ -68,18 +68,18 @@ public class UserController {
 
 	@DeleteMapping(path = "/{id}")
 	public void deleteUserById(@PathVariable Integer id) {
-		userDAOService.deleteById(id);
+		userService.deleteById(id);
 	}
 	
 	@GetMapping("/{id}/posts")
 	public List<Post> getPostsByUserId(@PathVariable Integer id) {
-		User user = userDAOService.findById(id);
+		User user = userService.findById(id);
 		return user.getPosts();
 	}
 	
 	@PostMapping(path = "/{id}/posts")
 	public ResponseEntity<Object> createPost(@PathVariable Integer id, @Valid @RequestBody Post post) throws URISyntaxException {
-		User user = userDAOService.findById(id);
+		User user = userService.findById(id);
 		
 		post.setUser(user);
 		

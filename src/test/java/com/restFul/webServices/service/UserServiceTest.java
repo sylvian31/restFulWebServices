@@ -1,26 +1,28 @@
 package com.restFul.webServices.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.restFul.webServices.bean.User;
-import com.restFul.webServices.exception.UserNotFoundException;
 import com.restFul.webServices.repository.UserRepository;
 import com.restFul.webServices.service.impl.UserServiceImpl;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 public class UserServiceTest {
 
 	@Mock
@@ -28,9 +30,6 @@ public class UserServiceTest {
 
 	@InjectMocks
 	private UserServiceImpl userService = new UserServiceImpl();
-
-	@Captor
-	private ArgumentCaptor<User> userArgument;
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,15 +53,19 @@ public class UserServiceTest {
 		Assert.assertEquals(new Integer(0), age);
 	}
 
-	@Test(expected = UserNotFoundException.class)
-	public void testGetUser() throws URISyntaxException {
+	@Test()
+	public void testSaveUser() throws URISyntaxException {
+		doReturn(generateUser()).when(userRepository).save(any(User.class));
+		User user = userService.save(generateUser());
+		Assert.assertEquals(user.getId(), new Integer(10001));
+		Assert.assertEquals(user.getName(), "sylvian");
+		Assert.assertEquals(user.getBirthDay(), LocalDate.of(1961, 5, 17));
+	}
 
-		Mockito.when(userService.save(generateUser())).thenReturn(generateUser());
-		Mockito.when(userService.findById(10001)).thenReturn(generateUser());
-
-		userRepository.save(generateUser());
+	@Test
+	public void testFindUser() {
+		doReturn(Optional.of(generateUser())).when(userRepository).findById(any(Integer.class));
 		User user = userService.findById(10001);
-
 		Assert.assertEquals(user.getId(), new Integer(10001));
 		Assert.assertEquals(user.getName(), "sylvian");
 		Assert.assertEquals(user.getBirthDay(), LocalDate.of(1961, 5, 17));
