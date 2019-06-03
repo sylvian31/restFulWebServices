@@ -26,7 +26,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.restFul.webServices.bean.Post;
 import com.restFul.webServices.bean.User;
-import com.restFul.webServices.exception.UserNotFoundException;
 import com.restFul.webServices.repository.PostRepository;
 import com.restFul.webServices.service.UserService;
 
@@ -38,7 +37,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PostRepository postRepository;
 
@@ -70,19 +69,20 @@ public class UserController {
 	public void deleteUserById(@PathVariable Integer id) {
 		userService.deleteById(id);
 	}
-	
+
 	@GetMapping("/{id}/posts")
 	public List<Post> getPostsByUserId(@PathVariable Integer id) {
 		User user = userService.findById(id);
 		return user.getPosts();
 	}
-	
+
 	@PostMapping(path = "/{id}/posts")
-	public ResponseEntity<Object> createPost(@PathVariable Integer id, @Valid @RequestBody Post post) throws URISyntaxException {
+	public ResponseEntity<Object> createPost(@PathVariable Integer id, @Valid @RequestBody Post post)
+			throws URISyntaxException {
 		User user = userService.findById(id);
-		
+
 		post.setUser(user);
-		
+
 		postRepository.save(post);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId())
@@ -90,7 +90,5 @@ public class UserController {
 
 		return ResponseEntity.created(location).build();
 	}
-	
-	
-	
+
 }
