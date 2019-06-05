@@ -1,5 +1,7 @@
 # restFulWebServices
 
+Mis en pratique des connaisances liée au API REST. 
+
 #Points principaux
 
 Enhancing POST Method to return correct HTTP Status Code and Location URI
@@ -31,3 +33,5 @@ Basic Authentication with Spring Security
 Connecting RESTful Service to JPA
 
 Relationship
+
+
